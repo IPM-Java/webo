@@ -31,11 +31,10 @@ public class ConnexionProccess {
                     }
                 }
                 stmt.close();
+                return isConnect;
         } catch (SQLException e) {
             throw new Exception("Problème " + e.getMessage());
-        } finally {           
-            return isConnect;
-        }        
+        }
     }
     
     private static String getFieldValue(HttpServletRequest request, String field) {

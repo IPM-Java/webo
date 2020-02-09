@@ -9,8 +9,12 @@
         <jsp-file>/JSP/home/home.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>TrainningProgramme</servlet-name>
+        <servlet-name>TrainningProgrammeView</servlet-name>
         <jsp-file>/JSP/training/program.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>PerformanceView</servlet-name>
+        <jsp-file>/JSP/performance/performance.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginView</servlet-name>
@@ -21,8 +25,12 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TrainningProgramme</servlet-name>
+        <servlet-name>TrainningProgrammeView</servlet-name>
         <url-pattern>/mes-programmes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PerformanceView</servlet-name>
+        <url-pattern>/performance</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class SQLmanager {
     
-    private static final String URL = "jdbc:mysql://dbmysql.cwhe7rqtpqtv.eu-west-3.rds.amazonaws.com:3306/projet.dev";
+    private static final String URL = "jdbc:mysql://dbmysql.cwhe7rqtpqtv.eu-west-3.rds.amazonaws.com:3306/BD_WEBO";
     
     private static final String LOGIN = "application";
     

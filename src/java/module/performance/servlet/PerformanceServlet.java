@@ -1,14 +1,15 @@
-package module.training.servlet;
+package module.performance.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "TrainingHomeServlet", urlPatterns = {"/TrainingHomeServlet"})
-public class TrainingHomeServlet extends HttpServlet {
+@WebServlet(name = "PerformanceServlet", urlPatterns = {"/PerformanceServlet"})
+public class PerformanceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,9 +27,10 @@ public class TrainingHomeServlet extends HttpServlet {
          * TODO
          */
         
-        request.getRequestDispatcher("mes-programmes").forward(request, response);
+        request.getRequestDispatcher("performance").forward(request, response);
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -65,6 +67,6 @@ public class TrainingHomeServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }

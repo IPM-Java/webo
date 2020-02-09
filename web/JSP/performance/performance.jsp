@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <title>Page d'accueil</title>
+        <title>Mes performances</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" rel="stylesheet" href="Public/css/bootstrap.min.css" />
@@ -14,9 +14,8 @@
         <%@include file="../../Template/user/header.html" %>
         <div class="container mt-5">
             <div class="jumbotron">
-                <h1>A implementer</h1>
+                <h1>Peformance: implementer</h1>
             </div>
         </div>
     </body> 
 </html>
-
