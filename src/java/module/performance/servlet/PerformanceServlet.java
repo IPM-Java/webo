@@ -1,12 +1,18 @@
 package module.performance.servlet;
 
+import business.Bilan;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import business.User;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import module.performance.model.BilanModel;
 
 @WebServlet(name = "PerformanceServlet", urlPatterns = {"/PerformanceServlet"})
 public class PerformanceServlet extends HttpServlet {
@@ -21,11 +27,16 @@ public class PerformanceServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, Exception {
         
         /**
          * TODO
          */
+        User user = (User)request.getSession().getAttribute("user");
+        int idUser = user.getId();
+        
+        ArrayList<Bilan> bilans = BilanModel.lireBilan(idUser);
+        request.setAttribute("bilans", bilans);
         
         request.getRequestDispatcher("performance").forward(request, response);
     }
@@ -42,7 +53,11 @@ public class PerformanceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(PerformanceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -56,7 +71,11 @@ public class PerformanceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(PerformanceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
