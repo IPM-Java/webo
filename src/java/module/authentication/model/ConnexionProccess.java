@@ -16,16 +16,15 @@ public class ConnexionProccess {
       
     public static boolean toConnect(HttpServletRequest request)throws Exception {        
         boolean isConnect = false;
-        String sql = "SELECT c.idclient, c.nomclient, c.prenomclient, u.adressemail, r.idrole, u.password "
-                + "FROM TE_UTILISATEUR u, TE_CLIENT c, TE_ROLE r "
-                + "WHERE u.idrole = r.idrole "
-                + "AND u.idutilisateur = c.idutilisateur "
-                + "AND adressemail = ?";                    
+        String sql = "SELECT c.idC, c.nomC, c.prenomC, u.mailU, u.idR, u.mdpU "
+                + "FROM Utilisateur u, Client c "
+                + "WHERE u.idC = c.idC "
+                + "AND mailU = ?";                    
         try (PreparedStatement stmt = SQLmanager.getInstance().prepareStatement(sql)) {
                 stmt.setString(1, getFieldValue(request, MAIL_INPUT));
                 ResultSet rs = stmt.executeQuery();
                 if (rs.first()) {
-                    if (rs.getString(PASSWD_INPUT).equals(getFieldValue(request, PASSWD_INPUT))) {
+                    if (rs.getString("mdpU").equals(getFieldValue(request, PASSWD_INPUT))) {
                         request.getSession().setAttribute(KEY_SESSION_USER, hydrate(rs));
                         isConnect = true;
                     }
@@ -47,12 +46,12 @@ public class ConnexionProccess {
     }
     
     public static User hydrate(ResultSet rs) throws SQLException {
-        return new User(rs.getInt("idclient"),
-            rs.getString("nomclient"),
-            rs.getString("prenomclient"),
-            rs.getString("adressemail"),
+        return new User(rs.getInt("idC"),
+            rs.getString("nomC"),
+            rs.getString("prenomC"),
+            rs.getString("mailU"),
             true,
-            rs.getInt("idrole")           
+            rs.getInt("idR")           
         );     
     }    
 }
