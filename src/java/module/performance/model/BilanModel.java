@@ -12,7 +12,7 @@ import java.sql.Date;
  * Classe de lecture des bilans
  */
 public class BilanModel {
-    
+  
    public static ArrayList<Bilan> lireBilan(int id) throws ClassNotFoundException, SQLException, Exception {
 
         /*----- Requête SQL -----*/

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import business.User;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -34,10 +35,8 @@ public class PerformanceServlet extends HttpServlet {
          */
         User user = (User)request.getSession().getAttribute("user");
         int idUser = user.getId();
-        
-        ArrayList<Bilan> bilans = BilanModel.lireBilan(idUser);
-        request.setAttribute("bilans", bilans);
-        
+        ArrayList<Bilan> bilans = BilanModel.lireBilan(idUser);             
+        request.setAttribute("bilans", bilans);        
         request.getRequestDispatcher("performance").forward(request, response);
     }
 

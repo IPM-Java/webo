@@ -4,21 +4,31 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class Bilan {
+
     private int idclient;
     private int ids;
     private Date dateoccprog;
     private int fc5mins;
     private int fc30flexions;
     private int fc1min;
+    private float indiceDickson;
 
-    public Bilan( int ids, Date dateoccprog, int fc5mins, int fc30flexions, int fc1min) {
+    public Bilan(int ids, Date dateoccprog, int fc5mins, int fc30flexions, int fc1min) {
         this.ids = ids;
         this.dateoccprog = dateoccprog;
         this.fc5mins = fc5mins;
         this.fc30flexions = fc30flexions;
         this.fc1min = fc1min;
+        this.indiceDickson = indiceDickson(fc5mins, fc30flexions, fc1min);
+    }
+    
+    public float getIndiceDickson() {
+        return indiceDickson;
     }
 
+    public void setIndiceDickson(float indiceDickson) {
+        this.indiceDickson = indiceDickson;
+    }
 
     public int getIds() {
         return ids;
@@ -40,7 +50,6 @@ public class Bilan {
         return fc1min;
     }
 
-
     public void setIds(int ids) {
         this.ids = ids;
     }
@@ -60,6 +69,11 @@ public class Bilan {
     public void setFc1min(int fc1min) {
         this.fc1min = fc1min;
     }
+
+    public float indiceDickson(int fc5mins, int fc30flexions, int fc1min) {
+        return ((getFc30flexions() - 70) + 2 * (getFc5mins() - getFc1min())) / 10;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -110,7 +124,5 @@ public class Bilan {
     public String toString() {
         return "Bilan{" + "idclient=" + idclient + ", ids=" + ids + ", dateoccprog=" + dateoccprog + ", fc5mins=" + fc5mins + ", fc30flexions=" + fc30flexions + ", fc1min=" + fc1min + '}';
     }
-    
-    
-    
+
 }
