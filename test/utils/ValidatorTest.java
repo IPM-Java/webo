@@ -15,6 +15,7 @@ public class ValidatorTest {
     @Test
     public void processRequestTest(){
         FormValidator validator = new FormValidator();
+        validator.isRequired("email", "");
         assertEquals(true, validator.isValid());
     }  
 }

@@ -2,7 +2,7 @@
  * Main js file
  * 
  */
-function graphe() {
+function main() {
     var chLine = document.getElementById("chLine");
     var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
             

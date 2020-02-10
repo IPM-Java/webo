@@ -26,10 +26,13 @@ public class Bilan {
         return indiceDickson;
     }
 
+<<<<<<< HEAD
     public void setIndiceDickson(float indiceDickson) {
         this.indiceDickson = indiceDickson;
     }
 
+=======
+>>>>>>> 8cfcf9c6d2fc32aa5cd472a3ed6976d53b064c1e
     public int getIds() {
         return ids;
     }
@@ -124,5 +127,9 @@ public class Bilan {
     public String toString() {
         return "Bilan{" + "idclient=" + idclient + ", ids=" + ids + ", dateoccprog=" + dateoccprog + ", fc5mins=" + fc5mins + ", fc30flexions=" + fc30flexions + ", fc1min=" + fc1min + '}';
     }
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 8cfcf9c6d2fc32aa5cd472a3ed6976d53b064c1e
 }
