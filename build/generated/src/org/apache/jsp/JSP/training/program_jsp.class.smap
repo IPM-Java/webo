@@ -1,0 +1,20 @@
+SMAP
+program_jsp.java
+JSP
+*S JSP
+*F
++ 0 program.jsp
+JSP/training/program.jsp
++ 1 header.html
+JSP/training/../../Template/user/header.html
+*L
+1,16:54
+1#1,24:70
+16#0,25:93
+41,7:119
+47,6:126
+53,3:133
+55,4:136
+59,13:141
+71,18:154
+*E
