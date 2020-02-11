@@ -17,8 +17,8 @@
         <jsp-file>/JSP/performance/performance.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>BilanView</servlet-name>
-        <jsp-file>/JSP/bilan/bilan.jsp</jsp-file>
+        <servlet-name>ExerciceServlet</servlet-name>
+        <servlet-class>module.training.servlet.ExerciceServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginView</servlet-name>
@@ -37,8 +37,8 @@
         <url-pattern>/performance</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BilanView</servlet-name>
-        <url-pattern>/realiser-bilan</url-pattern>
+        <servlet-name>ExerciceServlet</servlet-name>
+        <url-pattern>/ExerciceServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
