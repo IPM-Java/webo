@@ -16,6 +16,10 @@
         <servlet-name>PerformanceView</servlet-name>
         <jsp-file>/JSP/performance/performance.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>BilanView</servlet-name>
+        <jsp-file>/JSP/bilan/bilan.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginView</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>PerformanceView</servlet-name>
         <url-pattern>/performance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BilanView</servlet-name>
+        <url-pattern>/realiser-bilan</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
