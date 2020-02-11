@@ -35,8 +35,11 @@ public class PerformanceServlet extends HttpServlet {
          */
         User user = (User)request.getSession().getAttribute("user");
         int idUser = user.getId();
-        ArrayList<Bilan> bilans = BilanModel.lireBilan(idUser);             
+        
+        ArrayList<Bilan> bilans = BilanModel.lireBilan(idUser);       
         request.setAttribute("bilans", bilans);        
+                  
+        
         request.getRequestDispatcher("performance").forward(request, response);
     }
 

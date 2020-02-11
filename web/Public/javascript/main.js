@@ -8,13 +8,15 @@ function main() {
             
     var rawData = document.querySelectorAll(".indiceDickson");
     
+    console.log(rawData);
+    
     var dataSet = [];
     for (var i = 0 ; i <= rawData.length -1 ; i++ ) {
         dataSet.push(rawData[i].textContent);
     }
     
     var label = [];
-    for (var i = 0 ; i <= dataSet.length -1 ; i++ ) {
+    for (var i = 1 ; i <= dataSet.length  ; i++ ) {
         label.push("Bilan " + i);
     }
     

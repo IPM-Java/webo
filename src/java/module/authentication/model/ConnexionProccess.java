@@ -16,7 +16,7 @@ public class ConnexionProccess {
       
     public static boolean toConnect(HttpServletRequest request)throws Exception {        
         boolean isConnect = false;
-        String sql = "SELECT c.idC, c.nomC, c.prenomC, u.mailU, u.idR, u.mdpU "
+        String sql = "SELECT c.idC, c.nomC, c.prenomC, u.mailU, u.idR, u.mdpU, c.dateNaissanC "
                 + "FROM Utilisateur u, Client c "
                 + "WHERE u.idC = c.idC "
                 + "AND mailU = ?";                    
@@ -51,7 +51,8 @@ public class ConnexionProccess {
             rs.getString("prenomC"),
             rs.getString("mailU"),
             true,
-            rs.getInt("idR")           
+            rs.getInt("idR"),
+            rs.getDate("dateNaissanC")
         );     
     }    
 }
