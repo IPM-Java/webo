@@ -23,41 +23,53 @@
                             <hr>
                             <div class="form-group">
                                 <label for="fc1">Fréquence cardiaque après 5 minutes au calme</label>
-                                <input type="number" name="fc1" class="form-control" value="">
+                                <input type="number" name="fc1" class="form-control" min="0" max="200" required>
                             </div>
                             <div class="form-group">
                                 <label for="fc2">Fréquence cardiaque après 30 flexions complètes en 45 secondes</label>
-                                <input type="number" name="fc2" class="form-control" value="">
+                                <input type="number" name="fc2" class="form-control" min="0" max="200" required>
                             </div>
                             <div class="form-group">
                                 <label for="fc3">Fréquence cardiaque 1 minutes allongée</label>
-                                <input type="number" name="fc3" class="form-control" value="">
-                            </div>                           
-                        </div>
-                        <div class="col-md-6">
-                            <h3>Mensurations <small>si objectif minceur</small></h3>
+                                <input type="number" name="fc3" class="form-control" min="0" max="200" required>
+                            </div>
+                            <div class="row px-3"><h3>Poids</h3></div>
                             <hr>
                             <div class="form-group">
-                                <label for="bras">Bras <small class="text-muted">(cm)</small></label>
-                                <input type="number" name="bras" class="form-control" value="">
+                                <label for="poids">Poids</label>
+                                <input type="number" name="poids" class="form-control" min="30" max="200" required>
                             </div>
-                            <div class="form-group">
-                                <label for="poitrine">Poitrine <small class="text-muted">(cm)</small></label>
-                                <input type="number" name="poitrine" class="form-control" value="">
-                            </div>                            
-                            <div class="form-group">
-                                <label for="taille">Taille <small class="text-muted">(cm)</small></label>
-                                <input type="number" name="taille" class="form-control" value="">
-                            </div>                            
-                            <div class="form-group">
-                                <label for="hanches">Hanches <small class="text-muted">(cm)</small></label>
-                                <input type="number" name="hanches" class="form-control" value="">
-                            </div>                            
-                            <div class="form-group">
-                                <label for="cuisses">Jambes <small class="text-muted">(cm)</small></label>
-                                <input type="number" name="cuisses" class="form-control" value="">
-                            </div>                     
-                        </div>                            
+                        </div>   
+                        <div class="col-md-6">
+                            <div class="row px-3"><h3>Mensurations <small>si objectif minceur</small></h3></div>
+                            <hr>
+                            <c:if test="${!isFitness}">
+                                <div style="pointer-events:none; opacity: 0.4;">
+                            </c:if>  
+                                <div class="form-group">
+                                    <label for="bras">Bras <small class="text-muted">(cm)</small></label>
+                                    <input type="number" name="bras" class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="poitrine">Poitrine <small class="text-muted">(cm)</small></label>
+                                    <input type="number" name="poitrine" class="form-control" value="">
+                                </div>                            
+                                <div class="form-group">
+                                    <label for="taille">Taille <small class="text-muted">(cm)</small></label>
+                                    <input type="number" name="taille" class="form-control" value="">
+                                </div>                            
+                                <div class="form-group">
+                                    <label for="hanches">Hanches <small class="text-muted">(cm)</small></label>
+                                    <input type="number" name="hanches" class="form-control" value="">
+                                </div>                            
+                                <div class="form-group">
+                                    <label for="cuisses">Jambes <small class="text-muted">(cm)</small></label>
+                                    <input type="number" name="cuisses" class="form-control" value="">
+                                </div>
+                            <c:if test="${!isFitness}">
+                                </div>
+                            </c:if>  
+                        </div>                        
                     </div>
                 </div>
                 <div class="jumbotron mt-3 px-3 py-3">
@@ -65,12 +77,12 @@
                     <hr>
                     <div class="row mt-3">
                         <div class="col-md-4">
-                            <img src="Public/img/gainage.jpg" class="img-fluid" alt="">
+                            <img src="Public/img/gainage.jpg" class="img-fluid" alt="gainage">
                         </div>
                         <div class="col-md-4 mt-2">
                             <h4>Gainage : <small class="text-muted">Temps maximun</small></h4>                           
                             <div class="form-group mt-1">
-                                <input type="time" name="gainage" class="form-control" value="">
+                                <input type="time" name="gainage" class="form-control" step='1' pattern="^[0-5][0-9]\:[0-5][0-9]\.[0-9]{1,3}$" required>
                             </div>
                         </div>
                     </div>
@@ -83,11 +95,11 @@
                             <h4>Fentes : <small>Répétition maximun</small></h4>
                             <div class="form-group">
                                 <small>Fentes jambe gauche</small>
-                                <input type="number" name="fgauche" class="form-control" value="">
+                                <input type="number" name="fgauche" class="form-control" min="0" max="200">
                             </div>
                             <div class="form-group">
                                 <small>Fentes jambe droite</small>
-                                <input type="number" name="fdroite" class="form-control" value="">
+                                <input type="number" name="fdroite" class="form-control" min="0" max="200">
                             </div>  
                         </div>
                     </div>
@@ -99,7 +111,7 @@
                         <div class="col-md-4 mt-2">
                             <h4>Crunch : <small>Répétition maximun</small></h4>
                             <div class="form-group">
-                                <input type="number" name="crunch" class="form-control" value="">
+                                <input type="number" name="crunch" class="form-control" min="0" max="200">
                             </div>
                         </div>
                     </div>
@@ -111,7 +123,7 @@
                         <div class="col-md-4 mt-2">
                             <h4>Pompes : <small>Répétition maximun</small></h4>
                             <div class="form-group">
-                                <input type="number" name="pompe" class="form-control" value="">
+                                <input type="number" name="pompe" class="form-control" min="0" max="200">
                             </div>                            
                         </div>
                     </div>
@@ -123,7 +135,7 @@
                         <div class="col-md-4 mt-2">
                             <h4>Squat : <small>Répétition maximun</small></h4>
                             <div class="form-group">
-                                <input type="number" name="squat" class="form-control" value="">
+                                <input type="number" name="squat" class="form-control" min="0" max="200">
                             </div>                            
                         </div>
                     </div>
@@ -135,9 +147,15 @@
                         <div class="col-md-4 mt-2">
                             <h4>Dips : <small>Répétition maximun</small></h4>                            
                             <div class="form-group">
-                                <input type="number" name="dips" class="form-control" value="">
+                                <input type="number" name="dips" class="form-control" min="0" max="200">
                             </div>                            
                         </div>
+                    </div>
+                </div>
+                <div class="jumbotron mt-3 px-3 py-3">
+                    <div class="form-group">
+                        <label for="comment">Commentaire :</label>
+                        <textarea class="form-control" name="comment" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="row mb-5"><button class="btn btn-success btn-block mr-auto">Envoyer mon bilan</button></div>

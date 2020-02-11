@@ -3,13 +3,15 @@ package module.bilan.servlet;
 import business.BilanForm;
 import business.User;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import module.bilan.model.BilanModel;
-import utils.FormValidator;
+import utils.TimeHelper;
 
 @WebServlet(name = "BilanServlet", urlPatterns = {"/BilanServlet"})
 public class BilanServlet extends HttpServlet {
@@ -24,36 +26,58 @@ public class BilanServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {       
+            throws ServletException, IOException, Exception {
+        
         User user = (User)request.getSession().getAttribute("user");
         int id = user.getId();
         
-        BilanForm bilan = hydrate(request);
-        
-        BilanModel.insererBilan(bilan);
-        
-        
+        BilanForm bilan = instance(request);
+              
+        BilanModel.insererBilan(bilan, id);               
     }
     
-    private BilanForm hydrate(HttpServletRequest request)
+    private BilanForm instance(HttpServletRequest request)
     {
-        return new BilanForm(
-            (int)request.getAttribute("fc1"),
-            (int)request.getAttribute("fc2"),
-            (int)request.getAttribute("fc3"),
-            (float)request.getAttribute("bras"),
-            (float)request.getAttribute("poitrine"),
-            (float)request.getAttribute("taille"),
-            (float)request.getAttribute("hanches"),
-            (float)request.getAttribute("cuisses"),
-            (int)request.getAttribute("gainage"),
-            (int)request.getAttribute("fdroite"),
-            (int)request.getAttribute("fgauche"),
-            (int)request.getAttribute("crunch"),
-            (int)request.getAttribute("pompe"),
-            (int)request.getAttribute("squat"),
-            (int)request.getAttribute("dips")
-        );
+        boolean isFitness = Boolean.valueOf(request.getParameter("isFitness"));
+        if (isFitness) {
+            return new BilanForm(
+                Integer.valueOf(request.getParameter("fc1")),
+                Integer.valueOf(request.getParameter("fc2")),
+                Integer.valueOf(request.getParameter("fc3")),
+                Integer.valueOf(request.getParameter("bras")),
+                Integer.valueOf(request.getParameter("poitrine")),
+                Integer.valueOf(request.getParameter("taille")),
+                Integer.valueOf(request.getParameter("hanches")),
+                Integer.valueOf(request.getParameter("cuisses")),
+                TimeHelper.toMins(request.getParameter("gainage")),
+                Integer.valueOf(request.getParameter("fdroite")),
+                Integer.valueOf(request.getParameter("fgauche")),
+                Integer.valueOf(request.getParameter("crunch")),
+                Integer.valueOf(request.getParameter("pompe")),
+                Integer.valueOf(request.getParameter("squat")),
+                Integer.valueOf(request.getParameter("dips")),
+                Integer.valueOf((String)request.getSession().getAttribute("occurence")),
+                Float.valueOf(request.getParameter("poids")),
+                (String)request.getParameter("comment")
+            );           
+        } else {
+             return new BilanForm(
+                Integer.valueOf(request.getParameter("fc1")),
+                Integer.valueOf(request.getParameter("fc2")),
+                Integer.valueOf(request.getParameter("fc3")),
+                TimeHelper.toMins(request.getParameter("gainage")),
+                Integer.valueOf(request.getParameter("fdroite")),
+                Integer.valueOf(request.getParameter("fgauche")),
+                Integer.valueOf(request.getParameter("crunch")),
+                Integer.valueOf(request.getParameter("pompe")),
+                Integer.valueOf(request.getParameter("squat")),
+                Integer.valueOf(request.getParameter("dips")),
+                Integer.valueOf((String)request.getSession().getAttribute("occurence")),
+                Float.valueOf(request.getParameter("poids")),
+                (String)request.getParameter("comment")
+            );           
+        }
+
     }
 
     /**
@@ -67,6 +91,15 @@ public class BilanServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        // User user = (User)request.getSession().getAttribute("user");
+        //boolean isFitness = user.getStatusFitness;       
+        boolean isFitness = false;
+        
+        request.setAttribute("isFitness", isFitness);
+        
+        request.getSession().setAttribute("occurence", request.getParameter("occurence"));
+        
         request.getRequestDispatcher("realiser-bilan").forward(request, response);
     }
 
@@ -81,7 +114,11 @@ public class BilanServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(BilanServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
