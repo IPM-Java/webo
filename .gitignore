@@ -1,4 +1,6 @@
 .gitignore
-/dist/
 .idea
 /test
+/build
+/dist
+/nbproject

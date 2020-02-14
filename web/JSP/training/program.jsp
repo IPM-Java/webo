@@ -14,79 +14,102 @@
         <link type="text/css" rel="stylesheet" href="Public/css/bootstrap.min.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+            ul a {
+                text-decoration: none !important;
+                color: black;
+            }
+        </style>
     </head>   
     <body class="h-100">
         <%@include file="../../Template/user/header.html" %>
         <div class="container mt-5">
-            <div class="jumbotron">
-                <h1>Mes Entraînements</h1>     
-
-                <h3>Programme en cours</h3>
-
-                <table class = "table table-hover table-striped mt-3">
-                    <thead class="thead-dark">                        
-                        <tr>
-                            <th>No.</th>
-                            <th>Program </th>
-                            <th>Description </th>
-                        </tr>                  
-                    </thead>
-                    <tbody>
-                        <%//Récupération de la liste avec les attributs.
-                            ArrayList<Program> programs = (ArrayList<Program>) request.getAttribute("programs");
-                            for (Program p : programs) {
-                                out.println("<tr><td>" + p.getIdP() + "</td>");
-                                out.println("<td>" + p.getNomP() + "</td>");
-                                out.println("<td>" + p.getDescriptionP() + "</td></tr>");
-                            }
-                        %>
-                    </tbody>
-                </table>
-
-                <%//Récupération de la liste avec les attributs.
-                    Float tauxReal = (Float) request.getAttribute("tauxReal");
-                    out.println("<progress value=" + tauxReal + " max='1' style=\"width: 100%\">" + tauxReal + "</progress>");
+            <div class="jumbotron px-5 py-5">
+                <div class="row"><h4 class="display-4">Mon Programme</h4></div>
+                <hr>
+                <%
+                    Program programme = (Program)request.getAttribute("programme");
+                    if (programme != null) {
+                        out.println("<p>" + programme.getNomP() + "</p>");
+                        out.println("<p>" + programme.getDescriptionP()+ "</p>");                       
+                    }
                 %>
 
-                <h3>Séance disponible</h3>
-
-                <table class = "table table-hover table-striped mt-3">
-                    <thead class="thead-dark">                        
-                        <tr>
-                            <th>Séance</th>
-                            <th>occurence</th>
-                            <th>Action</th>
-                        </tr>                  
-                    </thead>
-                    <tbody>                   
-                        <%//Récupération de la liste avec les attributs.
-                            ArrayList<Seance> seances = (ArrayList<Seance>) request.getAttribute("seances");
-                            SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                            String date = sDateFormat.format(new java.util.Date());
-                            int nbweek = SeanceModel.getWeekOfYear(date);
-
-                            for (Seance s : seances) {
-                                out.println("<tr>");
-                                out.println("<td>" + s.getNomS() + "</td>");
-                                out.println("<td>" + s.getIdO() + "</td>");
-                                String link;
-                                if ("Bilan".equals(s.getNomS())) {
-                                    link = "BilanServlet?occurence=" + s.getIdO();
-                                } else {
-                                    link = "SeanceServlet?occurence=" + s.getIdO();
-                                }
+                <div class="row"><h4 class="display-4 mt-3">Mes séances</h4></div>
+                <hr>
+                <ul class="list-group">
+                    <%
+                        ArrayList<Seance> seances = (ArrayList<Seance>) request.getAttribute("seances");
+                        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        String date = sDateFormat.format(new java.util.Date());
+                        int nbweek = SeanceModel.getWeekOfYear(date);
+                        
+                        String link = "";
+                        String classFormat = "";
+                        Seance s;
+                        int i;
+                        
+                        for (i = 0; i <= seances.size() - 1; i++) {                            
+                            s = seances.get(i);                           
+                            if ("Bilan".equals(s.getNomS())) {
                                 if (s.getNumSem() == nbweek) {
-                                    out.println("<td><a href=\"" + link + "\"><button class='btn btn-success' />Commencer</button></a></td>");
-                                } else if (s.getNumSem() > nbweek) {
-                                    out.println("<td><a href=\"" + link + "\"><button class='btn btn-secondary' disabled='disabled'/>En attente</button></a></td>");
+                                    if(!s.isCompleted()) {
+                                        link = "BilanServlet?occurence=" + s.getIdO();
+                                        classFormat = "list-group-item-primary";
+                                    } else {
+                                        link = "#";
+                                        classFormat = "list-group-item-success";
+                                    }                                   
+                                } else if (s.getNumSem() < nbweek) {
+                                    link = "#";
+                                    if(!s.isCompleted()) {
+                                        classFormat = "list-group-item-danger";
+                                    } else {
+                                        classFormat = "list-group-item-success";
+                                    }                                     
                                 } else {
-                                    out.println("<td><a href=\"" + link + "\"><button class='btn btn-dark' disabled='disabled'/>Terminer</button></a></td>");
+                                   link = "#";
+                                   classFormat = "list-group-item-secondary";
                                 }
-                                out.println("</tr>");
-                            }
-                        %>
-                    </tbody>
-                </table>                         
+                            } else {
+                                if (s.getNumSem() == nbweek) {
+                                    if (i > 0) {
+                                        if (!seances.get(i - 1).getNomS().equals("Bilan")) {
+                                            if (seances.get(i - 1).isCompleted() && !s.isCompleted()) {
+                                                link = "ExerciceServlet?occurence=" + s.getIdO();
+                                                classFormat = "list-group-item-primary";
+                                            } else if (!seances.get(i - 1).isCompleted()) {
+                                                link = "#";
+                                                classFormat = "list-group-item-secondary";
+                                            }                                
+                                        } else {
+                                            if(!s.isCompleted()) {
+                                                link = "ExerciceServlet?occurence=" + s.getIdO();
+                                                classFormat = "list-group-item-primary";
+                                            } else {
+                                                link = "#";
+                                                classFormat = "list-group-item-success";
+                                            }                                          
+                                        }    
+                                    }                               
+                                } else if (s.getNumSem() < nbweek) {
+                                    link = "#";
+                                    if(!s.isCompleted()) {
+                                        classFormat = "list-group-item-danger";
+                                    } else {
+                                        classFormat = "list-group-item-success";
+                                    }                                     
+                                } else {
+                                   link = "#";
+                                   classFormat = "list-group-item-secondary";
+                                }                                
+                            }                           
+                            out.println("<a href=\"" + link + "\"><li class=\"list-group-item " + classFormat + "\">"
+                                       + s.getNumSem() + " " +  s.getNomS() + " : <br>" + s.getDescriptif()                                                                           
+                                       + "</li></a>");                           
+                        }                            
+                    %>                        
+                </ul>
             </div>
         </div>
     </body> 

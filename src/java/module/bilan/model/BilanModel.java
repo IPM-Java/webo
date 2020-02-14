@@ -9,22 +9,21 @@ import java.sql.SQLException;
 
 public class BilanModel {
 
-    public static void insererBilan(BilanForm bilan, int idClient) throws Exception
+    public static void insererBilan(BilanForm bilan, int idClient, int programme) throws Exception
     {
-        // User user = (User)request.getSession().getAttribute("user");
-        //boolean isFitness = user.getStatusFitness;       
-        boolean isFitness = false;
-        
         String sql;
-        if (isFitness) {
-            sql = "INSERT INTO Bilan (IdO, IdC, fc1min, fc30Flexion, fc5min, Poids, Bras, Poitrine, Traille, Hanches, Cuisses, Comment) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        if (programme == 3) {
+            sql = "INSERT INTO BILAN (IDO, IDC, FC1MIN, FC30FLEXION, FC5MIN, POIDS, "
+                    + "BRAS, POITRINE, TAILLE, HANCHES, CUISSES, COMMENT, GAINAGE, FENTESG, "
+                    + "FENTESD, CRUNCH, POMPES, SQUATS, DIPS);"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         } else {
-            sql = "INSERT INTO Bilan (IdO, IdC, fc1min, fc30Flexion, fc5min, Poids, Comment) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            sql = "INSERT INTO Bilan (IDO, IDC, FC1MIN, FC30FLEXION, FC5MIN, POIDS, COMMENT, "
+                    + "GAINAGE, FENTESG, FENTESD, CRUNCH, POMPES, SQUATS, DIPS) VALUES "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         }                         
         try (PreparedStatement stmt = SQLmanager.getInstance().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) { 
-            if (isFitness) {
+            if (programme == 3) {
                 stmt.setInt(1, bilan.getOccurence());
                 stmt.setInt(2, idClient);
                 stmt.setInt(3, bilan.getFc1());
@@ -37,6 +36,13 @@ public class BilanModel {
                 stmt.setInt(10, bilan.getHanches());
                 stmt.setInt(11, bilan.getJambes());
                 stmt.setString(12, bilan.getComment());
+                stmt.setInt(13, bilan.getGainage());
+                stmt.setInt(14, bilan.getFente_g());
+                stmt.setInt(15, bilan.getFente_d());
+                stmt.setInt(16, bilan.getCrunch());
+                stmt.setInt(17, bilan.getPompe());
+                stmt.setInt(4, bilan.getSquat());
+                stmt.setInt(18, bilan.getDips());
             } else {
                 stmt.setInt(1, bilan.getOccurence());
                 stmt.setInt(2, idClient);
@@ -45,6 +51,13 @@ public class BilanModel {
                 stmt.setInt(5, bilan.getFc3());
                 stmt.setFloat(6, bilan.getPoids());
                 stmt.setString(7, bilan.getComment());
+                stmt.setInt(8, bilan.getGainage());
+                stmt.setInt(9, bilan.getFente_g());
+                stmt.setInt(10, bilan.getFente_d());
+                stmt.setInt(11, bilan.getCrunch());
+                stmt.setInt(12, bilan.getPompe());
+                stmt.setInt(13, bilan.getSquat());
+                stmt.setInt(14, bilan.getDips());
             }
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
@@ -53,12 +66,11 @@ public class BilanModel {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int idBilan = rs.getInt(1);
-                    insererNotification(idClient, idBilan);
+                    //insererNotification(idClient, idBilan);
                 }
                 rs.close();
             }
             stmt.close();
-            insererExercice(bilan, idClient);
                                        
         } catch (SQLException e) {
             throw new Exception("Problème (insererBilan) : " + e.getMessage());
@@ -66,73 +78,6 @@ public class BilanModel {
 
     }
     
-    private static void insererExercice(BilanForm bilan, int idClient) throws Exception
-    {
-        String sql;                          
-        try {
-            Connection db = SQLmanager.getInstance();           
-            sql = "INSERT INTO Realiser (IdC, IdO, IdEx, DateRealisation, nbRep) VALUES (?, ?, ?, NOW(), ?)";          
-            PreparedStatement stmt = SQLmanager.getInstance().prepareStatement(sql);
-            stmt.setInt(1, idClient);
-            stmt.setInt(2, bilan.getOccurence());
-            stmt.setInt(3, 11);
-            stmt.setInt(4, bilan.getGainage());
-            stmt.executeUpdate();
-            
-            sql = "INSERT INTO Realiser (IdC, IdO, IdEx, DateRealisation, nbRep) VALUES (?, ?, ?, NOW(), ?)";          
-            stmt = SQLmanager.getInstance().prepareStatement(sql);
-            stmt.setInt(1, idClient);
-            stmt.setInt(2, bilan.getOccurence());
-            stmt.setInt(3, 12);
-            stmt.setInt(4, bilan.getFente_g());
-            stmt.executeUpdate();
-            
-            sql = "INSERT INTO Realiser (IdC, IdO, IdEx, DateRealisation, nbRep) VALUES (?, ?, ?, NOW(), ?)";          
-            stmt = SQLmanager.getInstance().prepareStatement(sql);
-            stmt.setInt(1, idClient);
-            stmt.setInt(2, bilan.getOccurence());
-            stmt.setInt(3, 13);
-            stmt.setInt(4, bilan.getFente_d());
-            stmt.executeUpdate();
-            
-            sql = "INSERT INTO Realiser (IdC, IdO, IdEx, DateRealisation, nbRep) VALUES (?, ?, ?, NOW(), ?)";          
-            stmt = SQLmanager.getInstance().prepareStatement(sql);
-            stmt.setInt(1, idClient);
-            stmt.setInt(2, bilan.getOccurence());
-            stmt.setInt(3, 14);
-            stmt.setInt(4, bilan.getCrunch());
-            stmt.executeUpdate();
-            
-            sql = "INSERT INTO Realiser (IdC, IdO, IdEx, DateRealisation, nbRep) VALUES (?, ?, ?, NOW(), ?)";          
-            stmt = SQLmanager.getInstance().prepareStatement(sql);
-            stmt.setInt(1, idClient);
-            stmt.setInt(2, bilan.getOccurence());
-            stmt.setInt(3, 15);
-            stmt.setInt(4, bilan.getPompe());
-            stmt.executeUpdate();
-                    
-            sql = "INSERT INTO Realiser (IdC, IdO, IdEx, DateRealisation, nbTemps) VALUES (?, ?, ?, NOW(), ?)";          
-            stmt = SQLmanager.getInstance().prepareStatement(sql);
-            stmt.setInt(1, idClient);
-            stmt.setInt(2, bilan.getOccurence());
-            stmt.setInt(3, 16);
-            stmt.setInt(4, bilan.getSquat());
-            stmt.executeUpdate();
-            
-            sql = "INSERT INTO Realiser (IdC, IdO, IdEx, DateRealisation, nbTemps) VALUES (?, ?, ?, NOW(), ?)";          
-            stmt = SQLmanager.getInstance().prepareStatement(sql);
-            stmt.setInt(1, idClient);
-            stmt.setInt(2, bilan.getOccurence());
-            stmt.setInt(3, 17);
-            stmt.setInt(4, bilan.getDips());
-            stmt.executeUpdate();
-            
-            stmt.close();               
-        } catch (SQLException e) {
-            throw new Exception("Problème insererNotification() : " + e.getMessage());
-        }       
-    }
-
     private static void insererNotification(int idClient, int idBilan) throws Exception {
         String sql = "INSERT INTO Notification (IdC, IdB, DateHeureBilan, Vu) VALUES (?, ?, NOW(), 0)";
         try (PreparedStatement stmt = SQLmanager.getInstance().prepareStatement(sql)) {

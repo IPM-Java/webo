@@ -23,8 +23,11 @@ public class User {
     private int role;
 
     private String password;
+    
+    private int programme;
 
-    public User(int id, String name, String lastname, String mail, boolean isValidUser, int role, Date dateNaissance) {
+    public User(int id, String name, String lastname, String mail,
+            boolean isValidUser, int role, Date dateNaissance, int programme) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -33,6 +36,7 @@ public class User {
         this.role = role;
         this.dateNaissance = dateNaissance;
         this.ageP = ageP(dateNaissance);
+        this.programme = programme;
     }
 
 
@@ -119,6 +123,14 @@ public class User {
 
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
+    }
+    
+    public int getProgramme() {
+        return programme;
+    }
+
+    public void setProgramme(int programme) {
+        this.programme = programme;
     }
 
     @Override

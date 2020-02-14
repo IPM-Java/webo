@@ -30,10 +30,11 @@ public class BilanServlet extends HttpServlet {
         
         User user = (User)request.getSession().getAttribute("user");
         int id = user.getId();
+        int programme = user.getProgramme();
         
         BilanForm bilan = instance(request);
               
-        BilanModel.insererBilan(bilan, id);               
+        BilanModel.insererBilan(bilan, id, programme);               
     }
     
     private BilanForm instance(HttpServletRequest request)

@@ -1,7 +1,9 @@
 package module.training.servlet;
 
-import business.User;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import module.training.model.ExerciceModel;
 
-@WebServlet(name = "RealiserExerciceServlet", urlPatterns = {"/RealiserExerciceServlet"})
-public class RealiserExerciceServlet extends HttpServlet {
+@WebServlet(name = "CancelSeanceServlet", urlPatterns = {"/CancelSeanceServlet"})
+public class CancelSeanceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -22,23 +24,15 @@ public class RealiserExerciceServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
+        
         try {
-            String action = (String)request.getParameter("action");
-            int idExercice = Integer.valueOf(request.getParameter("exercice"));        
+            int user = Integer.valueOf(request.getParameter("user"));        
             int idOccurence = Integer.valueOf(request.getParameter("occurence"));
-            int idUser = Integer.valueOf(request.getParameter("user"));
-            if (action.equals("terminer")) {
-                String value = (String)request.getParameter("value");
-                ExerciceModel.insererExercice(idExercice, idOccurence, idUser, value, action);  
-            } else {
-                ExerciceModel.sauterExercice(idExercice, idOccurence, idUser, action); 
-            }                    
+            ExerciceModel.cancelSeance(user, idOccurence);        
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //request.setAttribute("error", e);
-            //request.getRequestDispatcher("ErrorHandlerServlet").forward(request, response);
-        }     
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +47,11 @@ public class RealiserExerciceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(CancelSeanceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -67,7 +65,11 @@ public class RealiserExerciceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(CancelSeanceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

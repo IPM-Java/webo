@@ -1,26 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package business;
 
 import java.util.Objects;
 
-/**
- *
- * @author iris0
- */
 public class Seance {
 
     private int IdO;
     private String nomS;
     private int numSem;
+    private String descriptif;
+    private boolean completed;
 
-    public Seance(int IdO, String nomS, int numSem) {
+    public Seance(int IdO, String nomS, int numSem, String descriptif) {
         this.IdO = IdO;
         this.nomS = nomS;
         this.numSem = numSem;
+        this.descriptif = descriptif;
     }
 
     public int getNumSem() {
@@ -46,7 +40,23 @@ public class Seance {
     public void setNomS(String nomS) {
         this.nomS = nomS;
     }
+    
+    public String getDescriptif() {
+        return descriptif;
+    }
 
+    public void setDescriptif(String descriptif) {
+        this.descriptif = descriptif;
+    }
+    
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean isCompleted) {
+        this.completed = isCompleted;
+    }
+    
     @Override
     public String toString() {
         return "Seance{" + "IdS=" + IdO + ", nomS=" + nomS + '}';

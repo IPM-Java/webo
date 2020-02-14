@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class SQLmanager {
     
-    private static final String URL = "jdbc:mysql://dbmysql.cwhe7rqtpqtv.eu-west-3.rds.amazonaws.com:3306/projet.dev";
+    private static final String URL = "jdbc:mysql://dbmysql.cwhe7rqtpqtv.eu-west-3.rds.amazonaws.com:3306/webo";
     
     private static final String LOGIN = "application";
     
@@ -16,7 +16,7 @@ public class SQLmanager {
 
     public static Connection getInstance() throws Exception
     {
-        if (SQLmanager.connexion == null) {
+        if (connexion == null) {
             try {
                Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException e) {
@@ -29,5 +29,12 @@ public class SQLmanager {
             }
         }
         return SQLmanager.connexion;
-    }   
+    }  
+    
+    public static void closeConnection()
+    {
+        if (connexion != null) {
+            connexion = null;
+        }
+    }
 }

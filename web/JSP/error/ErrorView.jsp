@@ -1,9 +1,3 @@
-<%-- 
-    Document   : liste
-    Created on : 11 févr. 2020, 22:44:53
-    Author     : user
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

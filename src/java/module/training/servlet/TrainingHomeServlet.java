@@ -6,6 +6,9 @@ import business.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -14,8 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import module.training.model.ProgramModel;
-import module.training.model.ProgressModel;
 import module.training.model.SeanceModel;
 
 @WebServlet(name = "TrainingHomeServlet", urlPatterns = {"/TrainingHomeServlet"})
@@ -34,20 +35,22 @@ public class TrainingHomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, Exception {
         
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-        int idUser = user.getId();
-                
-        ArrayList<Program> programs = ProgramModel.lireProgramme(1);             
-        request.setAttribute("programs", programs);
-        
-        float tauxReal = ProgressModel.tauxRealiserProgramme(1);
-        request.setAttribute("tauxReal", tauxReal); 
-        
-        ArrayList<Seance> seances = SeanceModel.readSeanceWeek(1);             
-        request.setAttribute("seances", seances); 
-        
-        request.getRequestDispatcher("mes-programmes").forward(request, response);
+        try {
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute("user");
+            int idUser = user.getId();
+
+            Program programs = SeanceModel.lireProgramme(idUser);             
+            request.setAttribute("programme", programs);
+
+            ArrayList<Seance> seances = SeanceModel.readSeanceWeek(idUser);
+            request.setAttribute("seances", seances); 
+
+            request.getRequestDispatcher("mes-programmes").forward(request, response);           
+        } catch (Exception e) {
+            request.setAttribute("error", e);
+            request.getRequestDispatcher("ErrorHandlerServlet").forward(request, response); 
+        }
     }
 
     /**

@@ -1,16 +1,15 @@
-package module.training.servlet;
+package error;
 
-import business.User;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import module.training.model.ExerciceModel;
 
-@WebServlet(name = "RealiserExerciceServlet", urlPatterns = {"/RealiserExerciceServlet"})
-public class RealiserExerciceServlet extends HttpServlet {
+@WebServlet(name = "ErrorHandlerServlet", urlPatterns = {"/ErrorHandlerServlet"})
+public class ErrorHandlerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -23,25 +22,21 @@ public class RealiserExerciceServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String action = (String)request.getParameter("action");
-            int idExercice = Integer.valueOf(request.getParameter("exercice"));        
-            int idOccurence = Integer.valueOf(request.getParameter("occurence"));
-            int idUser = Integer.valueOf(request.getParameter("user"));
-            if (action.equals("terminer")) {
-                String value = (String)request.getParameter("value");
-                ExerciceModel.insererExercice(idExercice, idOccurence, idUser, value, action);  
-            } else {
-                ExerciceModel.sauterExercice(idExercice, idOccurence, idUser, action); 
-            }                    
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            //request.setAttribute("error", e);
-            //request.getRequestDispatcher("ErrorHandlerServlet").forward(request, response);
-        }     
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ErrorHandlerServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Page d'erreur</h1>");
+            out.println("<h1>" + (String)request.getParameter("error") + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -78,6 +73,6 @@ public class RealiserExerciceServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

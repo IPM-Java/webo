@@ -13,16 +13,12 @@
         <jsp-file>/JSP/training/program.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>PerformanceView</servlet-name>
-        <jsp-file>/JSP/performance/performance.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>ExerciceServlet</servlet-name>
-        <servlet-class>module.training.servlet.ExerciceServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>BilanView</servlet-name>
         <jsp-file>/JSP/bilan/bilan.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ExerciceView</servlet-name>
+        <jsp-file>/JSP/training/exercice.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginView</servlet-name>
@@ -37,16 +33,12 @@
         <url-pattern>/mes-programmes</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PerformanceView</servlet-name>
-        <url-pattern>/performance</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ExerciceServlet</servlet-name>
-        <url-pattern>/ExerciceServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>BilanView</servlet-name>
         <url-pattern>/realiser-bilan</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExerciceView</servlet-name>
+        <url-pattern>/realiser-seance</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,16 +1,24 @@
 package module.training.servlet;
 
+import business.Exercice;
+import business.Program;
+import business.Seance;
 import business.User;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import module.training.model.ExerciceModel;
+import module.training.model.SeanceModel;
 
-@WebServlet(name = "RealiserExerciceServlet", urlPatterns = {"/RealiserExerciceServlet"})
-public class RealiserExerciceServlet extends HttpServlet {
+@WebServlet(name = "ExerciceServlet", urlPatterns = {"/ExerciceServlet"})
+public class ExerciceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -22,26 +30,30 @@ public class RealiserExerciceServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
+        
         try {
-            String action = (String)request.getParameter("action");
-            int idExercice = Integer.valueOf(request.getParameter("exercice"));        
-            int idOccurence = Integer.valueOf(request.getParameter("occurence"));
-            int idUser = Integer.valueOf(request.getParameter("user"));
-            if (action.equals("terminer")) {
-                String value = (String)request.getParameter("value");
-                ExerciceModel.insererExercice(idExercice, idOccurence, idUser, value, action);  
-            } else {
-                ExerciceModel.sauterExercice(idExercice, idOccurence, idUser, action); 
-            }                    
+            int idOcc = Integer.valueOf(request.getParameter("occurence"));
+            ArrayList<Exercice> exercices = ExerciceModel.getListExoSeance(idOcc);
+            request.setAttribute("exercices", exercices);
+                        
+            User user = (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+            
+            ArrayList<Integer> ids = new ArrayList<>();
+            ids.add(idOcc);
+            ids.add(userId);
+            
+            request.setAttribute("ids", ids);
+                   
+            request.getRequestDispatcher("realiser-seance").forward(request, response);       
         } catch (Exception e) {
             System.out.println(e.getMessage());
             //request.setAttribute("error", e);
-            //request.getRequestDispatcher("ErrorHandlerServlet").forward(request, response);
-        }     
+            //request.getRequestDispatcher("ErrorHandlerServlet").forward(request, response); 
+        }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -53,7 +65,11 @@ public class RealiserExerciceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ExerciceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -67,7 +83,11 @@ public class RealiserExerciceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ExerciceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -78,6 +98,6 @@ public class RealiserExerciceServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
