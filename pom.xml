@@ -1,9 +1,18 @@
 <project>   
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.bogotobogo</groupId>
-  <artifactId>bogotobogo_JenkinsOnEC2</artifactId>
+  
+  <parent>
+    <groupId>com.webo.maven-project</groupId>
+    <artifactId>webo</artifactId>
+    <packaging>jar</packaging>
+    <version>212.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  
+  <artifactId>server</artifactId>
   <packaging>jar</packaging>
-  <version>212.0-SNAPSHOT</version>
+  <name>Server</name>
+  <description>Logic.</description>
 
   <properties>
     <maven.compiler.source>7</maven.compiler.source>
