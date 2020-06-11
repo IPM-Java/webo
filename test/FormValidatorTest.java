@@ -1,4 +1,4 @@
-package utils;
+package test;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -18,8 +18,6 @@ public class FormValidatorTest
 
     @test
     public void testDemo() {
-        FormValidator validator = new FormValidator();
-        Assert.assertTrue(validator.demo(5)):
     }
 
 }
