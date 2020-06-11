@@ -49,6 +49,13 @@ public class FormValidator {
         }
     }
 
+    public boolean demo(int number) {
+        if (number < 10) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean isValid() {
         return this.errors.isEmpty();
     }
