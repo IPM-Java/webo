@@ -5,8 +5,7 @@
   <artifactId>webo</artifactId>
   <packaging>war</packaging>
   <version>1.0</version>
-  <relativePath>../pom.xml</relativePath>
-
+  
   <properties>
     <maven.compiler.source>7</maven.compiler.source>
     <maven.compiler.target>7</maven.compiler.target>
